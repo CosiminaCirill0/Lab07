@@ -11,3 +11,20 @@ class BibliotecaDAO:
         pass
 
     # TODO
+    def read_biblioteca_from_db(self):
+        cnx = DBConnect.get_connection()
+        if cnx is not None:
+            query = "SELECT * FROM biblioteca ORDER BY nome"
+            cursor = cnx.cursor()
+            cursor.execute(query)
+
+            results = []
+            for row in cursor:
+                biblioteca = Biblioteca(*row)
+                results.append(biblioteca)
+
+            cursor.close()
+            cnx.close()
+            return results
+        return None
+

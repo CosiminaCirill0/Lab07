@@ -37,9 +37,32 @@ class View:
 
         # --- Sezione 2: Filtraggio ---
         # TODO
+        # Menu a tendina per la selezione della biblioteca
+        self.dd_biblioteca = ft.Dropdown(
+            label="Biblioteca",
+            width=400
+        )
+        # Popola le opzioni del menu chiamando il controller
+        self.controller.popola_dropdown_biblioteche()
+
+        # Menu a tendina per la selezione del genere
+        self.dd_genere = ft.Dropdown(
+            label="Genere",
+            width=220
+        )
+        # Popola le opzioni del menu chiamando il controller
+        self.controller.popola_dropdown_generi()
 
         # Sezione 3: Libri
         # TODO
+        # Pulsante che attiva il filtraggio
+        btn_mostra_libri = ft.Button(
+            "Mostra Libri",
+            on_click=self.controller.handle_mostra_libri
+        )
+        # Contenitore scorrevole per la visualizzazione dinamica dei libri trovati
+        self.lista_libri = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
+
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -54,9 +77,24 @@ class View:
 
             # Sezione 2: Filtraggio
             # TODO
+            ft.Row(spacing=20,
+                   controls=[self.dd_biblioteca, self.dd_genere],
+                   alignment= ft.MainAxisAlignment.CENTER),
+            ft.Divider(),
 
             # Sezione 3: Libri
             # TODO
+            ft.Row(spacing=200,
+                   controls=[btn_mostra_libri],
+                   alignment=ft.MainAxisAlignment.CENTER),
+
+            # Contenitore bordato per delimitare visivamente la ListView
+            ft.Container(
+                content=self.lista_libri,
+                height=250,
+                border=ft.Border.all(1, ft.Colors.BLACK),
+                padding=5,
+            )
         )
 
         self.page.scroll = "adaptive"
